@@ -1,8 +1,9 @@
-# SoftwareEngineerin
+# SoftwareEngineering
 
 #### Description
-队伍成员：林光明，孟想文昕，刘凯欣，周备
+Team Members：Lin Guangming, Meng Xiangwenxin, Liu Kaixin, Zhou Bei
 
+<!--
 #### Software Architecture
 Software architecture description
 
@@ -34,3 +35,4 @@ Software architecture description
 4.  The most valuable open source project [GVP](https://gitee.com/gvp)
 5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
 6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+-->
