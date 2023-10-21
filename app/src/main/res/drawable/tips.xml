@@ -1,0 +1,7 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke
+        android:color="#ffffff"
+    android:width="5dp" />
+    <solid android:color="#334455" /> <!-- 设置黑板的填充颜色，这里是深蓝色 -->
+    <corners android:radius="10dp" /> <!-- 设置黑板的圆角半径，可以根据需要自行调整 -->
+</shape>
