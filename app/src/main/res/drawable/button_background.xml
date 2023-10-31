@@ -1,0 +1,17 @@
+<!-- res/drawable/button_background.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 底部图层，用于设置按钮的背景颜色 -->
+    <item>
+        <shape>
+            <solid android:color="#66FF5733" /> <!-- 设置背景颜色 -->
+        </shape>
+    </item>
+
+    <!-- 顶部图层，用于设置按钮的圆角效果 -->
+    <item android:right="1dp" android:left="1dp" android:top="1dp" android:bottom="1dp">
+        <shape>
+            <corners android:radius="8dp" /> <!-- 设置圆角半径 -->
+            <solid android:color="#00000000" /> <!-- 设置透明颜色，保持圆角效果 -->
+        </shape>
+    </item>
+</layer-list>

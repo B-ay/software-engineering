@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/chanllenge_problem_background"
+    tools:context=".ChanllengeModeQuestion">
+
+
+    <ImageView
+        android:id="@+id/ig_backboard"
+        android:layout_width="509dp"
+        android:layout_height="155dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="124dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_option_C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/chanllenge_blackboard" />
+
+    <Button
+        android:id="@+id/btn_option_B"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="194dp"
+        android:layout_marginEnd="108dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/chanllenge_wooden"
+        android:gravity="center"
+        android:text="B、星期四"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_option_D"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_option_A"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_option_C"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="133dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="38dp"
+        android:background="@drawable/chanllenge_wooden"
+        android:gravity="center"
+        android:text="C、星期六"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_option_D"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_chanllenge_problem" />
+
+    <Button
+        android:id="@+id/btn_option_A"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="133dp"
+        android:layout_marginTop="194dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/chanllenge_wooden"
+        android:gravity="center"
+        android:text="A、星期三"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_option_C"
+        app:layout_constraintEnd_toStartOf="@+id/btn_option_B"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_option_D"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="108dp"
+        android:layout_marginBottom="38dp"
+        android:background="@drawable/chanllenge_wooden"
+        android:gravity="center"
+        android:text="D、星期五"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_option_C"
+        app:layout_constraintTop_toBottomOf="@+id/btn_option_B" />
+
+    <TextView
+        android:id="@+id/tv_chanllenge_problem"
+        android:layout_width="229dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginBottom="172dp"
+        android:text="肯德基疯狂星期几？"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_option_C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
