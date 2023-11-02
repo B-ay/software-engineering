@@ -9,11 +9,21 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import android.view.View;
 
-public class AdventureModeCorrect extends AppCompatActivity implements View.OnClickListener{
+import me.jessyan.autosize.internal.CustomAdapt;
+
+public class AdventureModeCorrect extends AppCompatActivity implements View.OnClickListener, CustomAdapt {
     ImageButton img_btn_adventure_mode_correct_right;
     ImageButton img_btn_adventure_mode_correct_back;
     String MathOrEnglish; // 目前的模式是数学还是英文
 
+    @Override
+    public boolean isBaseOnWidth() {
+        return true;
+    }
+    @Override
+    public float getSizeInDp() {
+        return 411;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

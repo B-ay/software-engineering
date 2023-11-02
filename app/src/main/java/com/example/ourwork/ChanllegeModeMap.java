@@ -11,27 +11,28 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.view.Gravity;
-import android.view.ViewGroup;
-import android.widget.PopupWindow;
 import android.os.Handler;
 import java.util.HashMap; // 用于hash
-import java.util.HashSet;
+
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.content.pm.ActivityInfo;
 import java.util.Random;
-import android.graphics.drawable.AnimationDrawable;
+
 import android.widget.ViewFlipper;
 import android.util.Log;
-// 线程通信
-import java.util.concurrent.CountDownLatch;
 
-public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickListener{
+import me.jessyan.autosize.internal.CustomAdapt;
+// 线程通信
+
+
+public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickListener {
     int person_num; // 用户人数
     int person_now; // 目前操作的用户
     int complete_num; // 完成游戏的人数
     HashMap<Integer, Integer> grid = new HashMap<>(); // 用于判定这个格子是 抽卡 or 答题 or 陷阱 or 开始 (分别用0, 题目数, -1, -2)表示
     boolean[] ProblemUsed = new boolean[500];
+
 
     // 定义player
     class Player {
@@ -581,5 +582,6 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
     }
 
     // 处理答题返回信息
+
 
 }
