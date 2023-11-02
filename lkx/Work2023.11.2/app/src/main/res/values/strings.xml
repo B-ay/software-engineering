@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">OurWork</string>
+    <!--start of lkx-->
+    <string name="答题模式1">冒险模式</string>
+    <string name="答题模式2">挑战模式</string>
+    <string name="数学">数学</string>
+    <string name="英语">英语</string>
+    <string name="难度选择">难度选择</string>
+    <string name="HOME">主页</string>
+    <string name="USER">用户</string>
+    <string name="GRADE1">一年级</string>
+    <string name="GRADE2">二年级</string>
+    <string name="GRADE3">三年级</string>
+    <string name="GradeChoose">年级选择</string>
+    <string name="开始答题">开始答题</string>
+    <string name="button0"> 0 </string>
+    <string name="button1"> 1 </string>
+    <string name="button2"> 2 </string>
+    <string name="button3"> 3 </string>
+    <string name="button4"> 4 </string>
+    <string name="button5"> 5 </string>
+    <string name="button6"> 6 </string>
+    <string name="button7"> 7 </string>
+    <string name="button8"> 8 </string>
+    <string name="button9"> 9 </string>
+    <string name="button."> . </string>
+    <string name="buttonSubmit"> OK </string>
+    <string name="sub"> — </string>
+    <string name="出题内容"> 出题内容 </string>
+    <string name="英语出题内容"> 英语出题内容 </string>
+    <string name="input_indicator">Your Answer:</string>
+    <!--end of lkx-->
+</resources>
