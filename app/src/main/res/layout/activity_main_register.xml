@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainRegister">
+
+
+    <EditText
+        android:id="@+id/et_register_password"
+        android:layout_width="216dp"
+        android:layout_height="61dp"
+        android:ems="10"
+        android:inputType="text"
+        android:textSize="18sp"
+        android:text="请设置你的密码"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_register_background"
+        app:layout_constraintVertical_bias="0.582" />
+
+    <EditText
+        android:id="@+id/et_register_password_check"
+        android:layout_width="216dp"
+        android:layout_height="61dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="请重复输入你的密码"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_register_background"
+        app:layout_constraintVertical_bias="0.697" />
+
+    <ImageView
+        android:id="@+id/iv_register_background"
+        android:layout_width="wrap_content"
+        android:layout_height="209dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/top_background_1" />
+
+    <TextView
+        android:id="@+id/tv_register_prompt"
+        android:layout_width="312dp"
+        android:layout_height="104dp"
+        android:text="注册账号\n开启你的冒险之旅！"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.161"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.264" />
+
+    <EditText
+        android:id="@+id/et_register_username"
+        android:layout_width="216dp"
+        android:layout_height="61dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="请输入用户名"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.476" />
+
+    <Button
+        android:id="@+id/btn_register_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="注册！"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_register_background"
+        app:layout_constraintVertical_bias="0.862" />
+
+    <ImageView
+        android:id="@+id/iv_register_back"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#12FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/iv_register_background"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/go_back" />
+
+    <TextView
+        android:id="@+id/tv_register_back"
+        android:layout_width="237dp"
+        android:layout_height="34dp"
+        android:fontFamily="@font/button_1"
+        android:gravity="center|left"
+        android:text="返回登录页面"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.298"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/re_rename_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#F0FFFF">
+        <ImageView
+            android:id="@+id/iv_rename_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/btn_back"
+            android:importantForAccessibility="no" />
+        <View
+            android:id="@+id/view_rename_temp"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/iv_rename_back"
+            android:background="#14191A" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/view_rename_temp"
+            android:text="修改资料"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_rename_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/commom_top">
+
+        <ImageView
+            android:id="@+id/iv_rename_avatar"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/cat"
+            />
+<!--        android:src="@drawable/circle_image"-->
+        <TextView
+            android:id="@+id/tv_touxiang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="头像"
+            android:textColor="#353535"
+            android:textSize="16sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="#dadada" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/re_rename_name"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/tv_rename_temp_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="用户名"
+            android:textColor="#353535"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/tv_rename_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_toRightOf="@id/tv_rename_temp_name"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:singleLine="true"
+            android:hint="林光明"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_rename_sex"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:clickable="true" >
+
+
+        <TextView
+            android:id="@+id/tv_rename_temp_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="性别"
+            android:textColor="#353535"
+            android:textSize="16sp" />
+        <EditText
+            android:id="@+id/tv_rename_sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_toRightOf="@id/tv_rename_temp_sex"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:singleLine="true"
+            android:hint="男"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="#dadada" />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/re_rename_dianhua"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:clickable="true">
+
+
+        <TextView
+            android:id="@+id/tv_rename_temp_region1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="电话"
+            android:textColor="#353535"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/tv_rename_dianhua"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_toRightOf="@id/tv_rename_temp_region1"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:singleLine="true"
+            android:hint="110"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="#dadada" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/tv_rename_baocun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="保存"
+            android:layout_centerHorizontal="true"
+            android:textColor="#353535"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

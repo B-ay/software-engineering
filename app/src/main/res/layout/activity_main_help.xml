@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainHelp">
+    
+    <TextView
+        android:id="@+id/tv_mainhelp_mainhelp_tv1"
+        android:layout_width="337dp"
+        android:layout_height="109dp"
+        android:text="关于此软件的介绍 \n此由“三个人买奶茶一个人写代码”团队\n倾心力作。\n 旨在为幼龄儿童提供简单的答题挑战。\nbalabalabala。。。"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.446" />
+
+    <ImageView
+        android:id="@+id/iv_mainhelp_mainhelp_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="209dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/top_background_1" />
+
+    <ImageView
+        android:id="@+id/iv_mainhelp_back"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="180dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.031"
+        app:srcCompat="@drawable/go_back" />
+</androidx.constraintlayout.widget.ConstraintLayout>
