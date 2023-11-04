@@ -14,7 +14,8 @@ import android.content.Intent;
 import org.w3c.dom.Text;
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class MainWelcome extends AppCompatActivity implements View.OnClickListener, CustomAdapt{
+// 总页面
+public class MainWelcome extends AppCompatActivity implements View.OnClickListener, CustomAdapt {
     Button btn_main_weclome_start;
     TextView tv_main_weclome_to_help;
 
@@ -39,16 +40,16 @@ public class MainWelcome extends AppCompatActivity implements View.OnClickListen
         if (user_num == -1) {
             // 构建这个文件的信息
             SharedPreferences.Editor edit = user_info.edit();
-            edit.putInt("user_num", 0);
-            edit.putBoolean("auto_login", false);
-            edit.putString("now_user", "");
+            edit.putInt("user_num", 0); // 本地用户存储数量
+            edit.putString("auto_login", "false"); // 是否自动登录
+            edit.putString("now_user", ""); // 当前用户
             // edit.commit(); // 使用commit进行提交
             edit.apply(); // 使用apply进行提交
         }
 
         // find & 设置监听器
         btn_main_weclome_start = findViewById(R.id.btn_main_welcome_start);
-        tv_main_weclome_to_help = findViewById(R.id.tv_main_weclome_prompt);
+        tv_main_weclome_to_help = findViewById(R.id.tv_main_welcome_to_help);
         btn_main_weclome_start.setOnClickListener(this);
         tv_main_weclome_to_help.setOnClickListener(this);
     }
@@ -57,12 +58,10 @@ public class MainWelcome extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         if (v.getId() == R.id.btn_main_welcome_start) {
             SharedPreferences use_info = getSharedPreferences("use_info", MODE_PRIVATE);
-            Boolean auto_login = use_info.getBoolean("auto_login", false); // 获取是否自动登录
-            if (auto_login) {
+            String auto_login = use_info.getString("auto_login", "false"); // 获取是否自动登录
+            if (auto_login.equals("true")) {
                 // 如果选择了自动登录的模式
                 // 此时一定user_num不是0
-                // 使用"now_user"去选取
-                // String user_name = use_info.getString("now_user", ""); // 不需要这一行代码
                 // 直接跳转到"ModeChoose"界面
                 Intent intent = new Intent(this, ModeChoose.class);
                 startActivity(intent);
@@ -84,4 +83,9 @@ public class MainWelcome extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        // do nothing 用于退出登录的返回响应
+    }
 }

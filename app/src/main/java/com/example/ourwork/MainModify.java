@@ -53,7 +53,7 @@ public class MainModify extends AppCompatActivity implements View.OnClickListene
     String sex;
     String phone;
     CountDownLatch latch; // 主线程强制等待子线程
-    Boolean usernameModifyCan;
+    Boolean usernameModifySuccess;
 
     @Override
     public boolean isBaseOnWidth() {
@@ -79,7 +79,7 @@ public class MainModify extends AppCompatActivity implements View.OnClickListene
         tv_touxiang = findViewById(R.id.tv_touxiang);
 
         // 数据初始化
-        usernameModifyCan = false;
+        usernameModifySuccess = false;
         // 初始化部分内容
         Init();
         // Log.d("init", "da");
@@ -124,6 +124,7 @@ public class MainModify extends AppCompatActivity implements View.OnClickListene
         File file = new File(rootDirectory, "avatar.jpg");
         String PicturePath = file.toString();
         if(file.exists()) {
+            // 没有的话就使用默认头像
             Bitmap bitmap = BitmapFactory.decodeFile(PicturePath);
             if (bitmap != null) {
                 img.setImageBitmap(bitmap);
@@ -141,7 +142,9 @@ public class MainModify extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.iv_rename_back) {
-            // 按倒返回键 直接结束
+            // 按返回键 重新start个人中心界面
+            Intent intent = new Intent(this, MainPersonalCenter.class);
+            startActivity(intent);
             finish();
         }
         else if (v.getId() == R.id.tv_rename_baocun) {
@@ -149,14 +152,17 @@ public class MainModify extends AppCompatActivity implements View.OnClickListene
             // 一条一条信息进行保存
             // 首先保存sex & phone
             ModifySexAndPhone(); // 这个是一定可以保存成功的
+
+            // 每次都要初始化
+            usernameModifySuccess = false;
             String origin = now_user;
             String next = et_usr.getText().toString();
             if (origin.equals(next)) {
                 // 如果没有修改用户名
-                usernameModifyCan = true;
+                usernameModifySuccess = true; // 就说明修改成功
             }
             else {
-                // 然后根据网络编程看是否更改
+                // 如果不相同就需要网络编程判断
                 latch = new CountDownLatch(1); // 每次都重新new
                 Thread RegistrationVerificationThread = new Thread(new MainModify.RegistrationVerification()); // 创建线程
                 RegistrationVerificationThread.start(); // 启动线程
@@ -165,14 +171,17 @@ public class MainModify extends AppCompatActivity implements View.OnClickListene
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                ModifyUsername(usernameModifyCan);
+                ModifyUsername(usernameModifySuccess); // 网络通信后可以修改用户名时
             }
             // 根据这个信息确定是否保存成功
-            if (usernameModifyCan) {
+            if (usernameModifySuccess) {
                 Toast toast = Toast.makeText(MainModify.this, "保存成功", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
                 toast.show();
             }
+            // 重新开启PersonalCenter界面
+            Intent intent = new Intent(this, MainPersonalCenter.class);
+            startActivity(intent);
             finish(); // 保存完后finih
         }
         else if (v.getId() == R.id.tv_touxiang) {
@@ -183,6 +192,7 @@ public class MainModify extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    // 用于处理手机图库访问
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         // 父类构造
@@ -219,9 +229,9 @@ public class MainModify extends AppCompatActivity implements View.OnClickListene
 
     public void ModifySexAndPhone() {
         SharedPreferences user_to_num = getSharedPreferences("user_to_num", MODE_PRIVATE);
-        int num = user_to_num.getInt(now_user, 0);
+        int numhere = user_to_num.getInt(now_user, 0);
         // 根据编号取得个人共享文件
-        String user_person = "user_personal" + String.valueOf(num);
+        String user_person = "user_personal" + String.valueOf(numhere);
         SharedPreferences user_personal = getSharedPreferences(user_person, MODE_PRIVATE);
         // 修改共享文件夹的sex&phone
         SharedPreferences.Editor edit = user_personal.edit();
@@ -232,9 +242,10 @@ public class MainModify extends AppCompatActivity implements View.OnClickListene
         edit.apply();
     }
 
+    // 此函数仅仅在调用网络编程之后才会调用
     public void ModifyUsername(boolean need) {
         if (need) {
-            // 如果需要修改用户名
+            // 如果能够更改用户名
             // 需要修改user_all和user_to_num
             String origin_name = now_user;
             String next_name = et_usr.getText().toString();
@@ -247,11 +258,18 @@ public class MainModify extends AppCompatActivity implements View.OnClickListene
             edit_user_all.apply();
             // 获取user_to_num
             SharedPreferences user_to_num = getSharedPreferences("user_to_num", MODE_PRIVATE);
-            int user_num = user_to_num.getInt(origin_name, 0);
+            int user_num_here = user_to_num.getInt(origin_name, 0);
             SharedPreferences.Editor edit_user_to_num = user_to_num.edit();
             edit_user_to_num.remove(origin_name);
-            edit_user_to_num.putInt(next_name, user_num);
+            edit_user_to_num.putInt(next_name, user_num_here);
             edit_user_to_num.apply();
+            // 获取user_info
+            SharedPreferences user_info = getSharedPreferences("user_info", MODE_PRIVATE);
+            SharedPreferences.Editor user_info_edit = user_info.edit();
+            user_info_edit.putString("now_user", next_name); // 修修改目前登录的用户名
+            user_info_edit.apply();
+            // note:还需要修改全局变量
+            now_user = next_name; // important important 其实也不需要 因为修改成功了 说明已经提交了 这个活动也将finish了
         }
         else {
             return;
@@ -262,7 +280,7 @@ public class MainModify extends AppCompatActivity implements View.OnClickListene
         // 重写run函数
         @Override
         public void run() {
-            String url = "http://47.120.38.204:104/modifyusername"; // 远程服务器 IP地址 + 端口号 + 路由
+            String url = "http://47.120.38.204:103/ModifyUsername"; // 远程服务器 IP地址 + 端口号 + 路由
             try {
                 URL obj = new URL(url);
                 HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
@@ -317,7 +335,7 @@ public class MainModify extends AppCompatActivity implements View.OnClickListene
                     }
 
                     if (state.equals("true")) {
-                        usernameModifyCan = true; // 修改此处为true;
+                        usernameModifySuccess = true; // 修改此处为true;
                         System.out.println("come here");
                     }
                     else {

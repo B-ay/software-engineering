@@ -58,7 +58,13 @@
             android:exported="true" />
         <activity
             android:name=".MainWelcome"
-            android:exported="true" />
+            android:exported="true">
+            <!--设置为主活动-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainRegister"
             android:exported="true" />
@@ -90,11 +96,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

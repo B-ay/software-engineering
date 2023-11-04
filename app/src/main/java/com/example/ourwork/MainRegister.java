@@ -28,6 +28,7 @@ import android.util.Log;
 
 // 线程通信
 import java.util.concurrent.CountDownLatch;
+
 import me.jessyan.autosize.internal.CustomAdapt;
 
 public class MainRegister extends AppCompatActivity implements View.OnClickListener, CustomAdapt {
@@ -113,9 +114,9 @@ public class MainRegister extends AppCompatActivity implements View.OnClickListe
                         SharedPreferences.Editor edit = user_info.edit();
                         edit.putInt("user_num", user_num); // user_num进行修改
                         edit.putString("now_user", username); // 修改为当前用户
-                        edit.putBoolean("auto_login", true); // 设置为自动登录
-                        // edit.commit(); // 使用commit进行提交
-                        edit.apply(); // 使用apply进行提交
+                        edit.putString("auto_login", "true"); // 设置为自动登录
+                        edit.commit(); // 使用commit进行提交
+                        //edit.apply(); // 使用apply进行提交
 
                         // 去修改user_all文件
                         SharedPreferences user_all = getSharedPreferences("user_all", MODE_PRIVATE); // 获得共享文件

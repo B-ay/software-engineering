@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-// 总的欢迎界面
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

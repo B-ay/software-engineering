@@ -31,7 +31,8 @@ import android.util.Log;
 import java.util.concurrent.CountDownLatch;
 
 import me.jessyan.autosize.internal.CustomAdapt;
-public class MainLogin extends AppCompatActivity implements View.OnClickListener, CustomAdapt{
+
+public class MainLogin extends AppCompatActivity implements View.OnClickListener, CustomAdapt {
     Button btn_login_next;
     ImageView iv_login_back;
     TextView tv_login_back;
@@ -75,10 +76,9 @@ public class MainLogin extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_login_next) {
-            // 直接从本地进行读取
             // 获得用户名和密码
-            username = et_login_username.getText().toString();
-            password = et_login_password.getText().toString();
+            username = et_login_username.getText().toString(); // 使用全局变量
+            password = et_login_password.getText().toString(); // 使用全局变量
             if (username.equals("")) {
                 Toast toast = Toast.makeText(getApplicationContext(), "用户名为空", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
@@ -106,7 +106,7 @@ public class MainLogin extends AppCompatActivity implements View.OnClickListener
                     SharedPreferences user_all = getSharedPreferences("user_all", MODE_PRIVATE); // 获得共享文件
                     String isOwn = user_all.getString(username, "");
                     if (isOwn.equals("")) {
-                        // 只有在此情形是第一个登录
+                        // 只有在此情形表示 在本机第一次登录 那么就需要去写下列文件
                         SharedPreferences.Editor all_edit = user_all.edit();
                         all_edit.putString(username, password);
                         // all_edit.commit(); // 使用commit进行提交
@@ -115,11 +115,10 @@ public class MainLogin extends AppCompatActivity implements View.OnClickListener
                         // 去修改user_info文件
                         SharedPreferences user_info = getSharedPreferences("user_info", MODE_PRIVATE); // 获得共享文件
                         int user_num = user_info.getInt("user_num", 0); // 这个地方按理是不会出现找不到的情形的
-                        user_num ++; // 自加 表示注册多了一个用户
+                        user_num ++; // 自加 表示本地信息多了一个用户
                         SharedPreferences.Editor edit = user_info.edit();
                         edit.putInt("user_num", user_num); // user_num进行修改
                         edit.putString("now_user", username); // 修改为当前用户
-                        edit.putBoolean("auto_login", true); // 设置为自动登录
                         // edit.commit(); // 使用commit进行提交
                         edit.apply(); // 使用apply进行提交
 
@@ -136,6 +135,14 @@ public class MainLogin extends AppCompatActivity implements View.OnClickListener
                         // 创建个人共享文件
                         createPersonalShare(user_num);
                     }
+
+                    //无论何种情形 只要登录成功 自动登录和当前用户名都要更新 // note:important
+                    // 去修改user_info文件
+                    SharedPreferences user_info = getSharedPreferences("user_info", MODE_PRIVATE); // 获得共享文件
+                    SharedPreferences.Editor edit = user_info.edit();
+                    edit.putString("now_user", username); // 修改为当前用户
+                    edit.putString("auto_login", "true"); // 设置为自动登录
+                    edit.apply(); // 使用apply进行提交
 
                     // 跳转界面
                     Intent intent = new Intent(this, ModeChoose.class);
@@ -156,7 +163,7 @@ public class MainLogin extends AppCompatActivity implements View.OnClickListener
             // 跳转到注册界面
             Intent intent = new Intent(this, MainRegister.class);
             startActivity(intent);
-            // finish(); // 注意不销毁本活动 因为存在可能不小心点到这个按钮的  // note
+            finish(); // 注意不销毁本活动 因为存在可能不小心点到这个按钮的  //  -> 还是销毁了好
         }
     }
 
@@ -182,7 +189,7 @@ public class MainLogin extends AppCompatActivity implements View.OnClickListener
     public void createPersonalShare(int user_num) {
         String user_personal = "user_personal" + String.valueOf(user_num);
         Log.d("user_personal", user_personal);
-        SharedPreferences share = getSharedPreferences(user_personal, MODE_PRIVATE); // 获得共享文件
+        SharedPreferences share = getSharedPreferences(user_personal, MODE_PRIVATE); // 获得共享文件()
         SharedPreferences.Editor share_edit = share.edit();
         // 初始化内容
         share_edit.putInt("Math", 0);

@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class MainHelp extends AppCompatActivity implements View.OnClickListener, CustomAdapt{
+public class MainHelp extends AppCompatActivity implements View.OnClickListener, CustomAdapt {
     ImageView iv_mainhelp_back;
 
     @Override

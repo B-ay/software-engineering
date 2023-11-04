@@ -42,6 +42,9 @@ import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
 import android.util.Log;
+// 线程通信
+import java.util.concurrent.CountDownLatch;
+
 public class MainPersonalCenter extends AppCompatActivity implements View.OnClickListener, CustomAdapt{
     ImageView avater; // 头像
     TextView nickname; // 昵称
@@ -55,7 +58,10 @@ public class MainPersonalCenter extends AppCompatActivity implements View.OnClic
     TextView password_modify; // 修改密码
     TextView exit_login; // 退出登录
     String now_username; // 目前的用户名
-    String NextPassword;
+    String NextPassword; // 全局数据成员 之后的密码
+    String ShuOriginPassword; // 输入的原先的密码
+    boolean ModifyPasswordNeed; // 是否需要换密码
+    CountDownLatch latch; // 主线程强制等待子线程
 
     @Override
     public boolean isBaseOnWidth() {
@@ -87,7 +93,6 @@ public class MainPersonalCenter extends AppCompatActivity implements View.OnClic
         exit_login = findViewById(R.id.tv_user_exit_login);
 
         // 数据初始化
-        // note:仅仅测试时注释
         InitFromFiles();
 
         // 设置监听器
@@ -101,10 +106,10 @@ public class MainPersonalCenter extends AppCompatActivity implements View.OnClic
     public void InitFromFiles() {
         // 获取当前用户username
         SharedPreferences user_info = getSharedPreferences("user_info", MODE_PRIVATE); // 获得共享文件
-        now_username = user_info.getString("now_user", ""); // 使用数据成员
+        now_username = user_info.getString("now_user", ""); // 使用全局数据成员
         // 获取当前用户的编号
         SharedPreferences user_to_num = getSharedPreferences("user_to_num", MODE_PRIVATE);
-        int user_num = user_to_num.getInt(now_username, 0);
+        int user_num = user_to_num.getInt(now_username, 0); // 用户编号用的是局部变量
         // 获取他的共享文件名
         String personalFile = "user_personal" + String.valueOf(user_num);
         // 打开它的共享文件
@@ -114,12 +119,15 @@ public class MainPersonalCenter extends AppCompatActivity implements View.OnClic
         int EnglishData = personal.getInt("English", 0);
         int MathRightData = personal.getInt("MathRight", 0);
         int EnglishRightData = personal.getInt("EnglishRight", 0);
+        String UID = personal.getString("uid", "");
 
         // 设置这些内容
         Math.setText(String.valueOf(MathData));
         English.setText(String.valueOf(EnglishData));
         MathRight.setText(String.valueOf(MathRightData));
         EnglishRight.setText(String.valueOf(EnglishRightData));
+        nickname.setText(now_username);
+        uid.setText(UID);
 
         // 从个人文件夹中获取图片
         // 获取头像
@@ -150,13 +158,17 @@ public class MainPersonalCenter extends AppCompatActivity implements View.OnClic
             // 跳转到修改界面
             Intent intent = new Intent(this, MainModify.class);
             startActivity(intent);
+            // 销毁本活动(因为修改之后 部分信息 不能再通过onCreate再初始化了)
+            finish(); // 那注意返回时要重新创建本活动了
         }
         else if (v.getId() == R.id.tv_user_help) {
             // 跳转到帮助中心界面
             Intent intent = new Intent(this, MainHelp.class);
             startActivity(intent);
+            // 不销毁
         }
         else if (v.getId() == R.id.tv_user_password_modify) {
+            ModifyPasswordNeed = false; // 每次都初始化下
             // 修改密码
             password_modify_fun();
         }
@@ -164,9 +176,10 @@ public class MainPersonalCenter extends AppCompatActivity implements View.OnClic
             // 修改user_info信息
             SharedPreferences user_info = getSharedPreferences("user_info", MODE_PRIVATE); // 获得共享文件
             SharedPreferences.Editor edit = user_info.edit();
-            edit.putBoolean("auto_login", false);
-            edit.putString("now_user", "");
+            edit.putString("auto_login", "false"); // 设置为自动登录
+            // edit.putString("now_user", ""); // 这一行先注释，以防出bug
             edit.apply();
+
             // 删除所有的活动
             Intent intent = new Intent(this, MainWelcome.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 设置返回到最开始的界面
@@ -209,47 +222,52 @@ public class MainPersonalCenter extends AppCompatActivity implements View.OnClic
                 String confirmPassword = confirmPasswordEditText.getText().toString();
                 String confirmPassword1 = confirmPasswordEditText1.getText().toString();
                 // 在这里处理用户输入的密码信息
-                setNewPassword(newPassword, confirmPassword, confirmPassword1);
-            }
-
-            public void setNewPassword(String newPassword, String confirmPassword, String confirmPassword1) {
-                SharedPreferences user_all = getSharedPreferences("user_all", MODE_PRIVATE);
-                String origin = user_all.getString(now_username, "");
-                if (newPassword.equals(origin)) {
-                    // 原密码输入正确
-                    if (confirmPassword.equals(confirmPassword1)) {
-                        if (confirmPassword.equals("")) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "重置密码为空", Toast.LENGTH_SHORT);
+                if (confirmPassword.equals(confirmPassword1)) {
+                    if (confirmPassword.equals("")) {
+                        Toast toast = Toast.makeText(getApplicationContext(), "重置密码为空", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+                        toast.show();
+                    }
+                    else {
+                        if (newPassword.equals("")) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "原密码为空", Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
                             toast.show();
                         }
                         else {
-                            Toast toast = Toast.makeText(getApplicationContext(), "重设密码成功", Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
-                            toast.show();
-                            // 修改相应文件
-                            // 修改user_all文件
-                            SharedPreferences.Editor user_all_edit = user_all.edit();
-                            user_all_edit.putString(now_username, confirmPassword);
-                            user_all_edit.apply();
-                            // 还要网络编程修改密码
+                            // 在此处设置这两个的值
+                            ShuOriginPassword = newPassword;
                             NextPassword = confirmPassword;
+                            // 涉及网络编程 注册的问题了
+                            latch = new CountDownLatch(1); // 每次都重新new
                             Thread RegistrationVerificationThread = new Thread(new MainPersonalCenter.RegistrationVerification()); // 创建线程
                             RegistrationVerificationThread.start(); // 启动线程
+                            try {
+                                latch.await(); // 主线程等待子线程结束
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            if (ModifyPasswordNeed) {
+                                // 修改user_all文件
+                                // 其实现在没有必要维护这个信息了
+                                SharedPreferences user_all = getSharedPreferences("user_all", MODE_PRIVATE);
+                                SharedPreferences.Editor user_all_edit = user_all.edit();
+                                user_all_edit.putString(now_username, confirmPassword);
+                                user_all_edit.apply();
+                                Toast toast = Toast.makeText(MainPersonalCenter.this, "密码修改成功", Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
+                                toast.show();
+                            }
                         }
-                    }
-                    else {
-                        Toast toast = Toast.makeText(getApplicationContext(), "重设密码两次不同", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
-                        toast.show();
                     }
                 }
                 else {
-                    Toast toast = Toast.makeText(getApplicationContext(), "原密码输入错误", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), "重设密码两次不同", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
                     toast.show();
                 }
             }
+
         });
 
         // 设置取消按钮动作
@@ -281,8 +299,9 @@ public class MainPersonalCenter extends AppCompatActivity implements View.OnClic
                 // 启用输入/输出流
                 connection.setDoOutput(true);
                 // 要发送的JSON数据
-                String jsonInputString = "{" + "\"username\":\"" + now_username + "\"" + "," + "\"password\":\"" + NextPassword + "\"" + "}";
-                // 将JSON数据写入连接的输出流
+                String jsonInputString = "{" + "\"username\":\"" + now_username + "\"" + "," + "\"origin\":\""
+                        + ShuOriginPassword
+                        + "\"" + "," + "\"password\":\"" + NextPassword + "\"" + "}";                // 将JSON数据写入连接的输出流
                 try (OutputStream os = connection.getOutputStream()) {
                     byte[] input = jsonInputString.getBytes("utf-8");
                     os.write(input, 0, input.length);
@@ -323,7 +342,7 @@ public class MainPersonalCenter extends AppCompatActivity implements View.OnClic
                     }
 
                     if (state.equals("true")) {
-
+                        ModifyPasswordNeed = true; // 修改成功
                         System.out.println("come here");
                     }
                     else {
@@ -331,7 +350,7 @@ public class MainPersonalCenter extends AppCompatActivity implements View.OnClic
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast toast = Toast.makeText(MainPersonalCenter.this, "用户名已存在", Toast.LENGTH_SHORT);
+                                Toast toast = Toast.makeText(MainPersonalCenter.this, "原密码输入错误", Toast.LENGTH_SHORT);
                                 toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
                                 toast.show();
                             }
@@ -343,6 +362,7 @@ public class MainPersonalCenter extends AppCompatActivity implements View.OnClic
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            latch.countDown(); // 锁 自减
         }
     }
 }

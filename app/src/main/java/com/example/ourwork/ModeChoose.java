@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class ModeChoose extends AppCompatActivity implements View.OnClickListener, CustomAdapt{
+public class ModeChoose extends AppCompatActivity implements View.OnClickListener, CustomAdapt {
     Button btn_mode_choose_adventure;
     Button btn_mode_choose_chanllenge;
     ImageButton img_btn_mode_choose_back;
