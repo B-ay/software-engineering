@@ -41,7 +41,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams;
 import android.view.ViewGroup;
-
+import java.util.Arrays;
 
 public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickListener{
 
@@ -453,6 +453,7 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                                 dataBundle.putInt("number", gridType); // 题目数量
                                 long seed = System.currentTimeMillis(); // 使用当前时间的毫秒数作为种子
                                 Random random = new Random(seed);
+                                Arrays.fill(ProblemUsed, false); // 保证本5次的题目不重复即可
                                 for (int i = 1; i <= gridType; i++) {
                                     while (true) {
                                         int x = random.nextInt(400 - 1 + 1) + 1; // 生成1-400的随机数
