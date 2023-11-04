@@ -24,11 +24,11 @@
 
     <!-- 设置描边效果
          width:描边宽度
-         color:描边颜色
+         color:描边颜色 a52a2a
      -->
-<!--    <stroke-->
-<!--        android:width="10px"-->
-<!--        android:color="#a52a2a" />-->
+    <stroke
+        android:width="5px"
+        android:color="#f0ffff" />
 
     <!-- 设置填充效果
          color:填充颜色

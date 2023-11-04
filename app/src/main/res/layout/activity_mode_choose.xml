@@ -11,43 +11,39 @@
         android:id="@+id/btn_mode_choose_adventure"
         android:layout_width="150dp"
         android:layout_height="80dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/btn_hard_1"
         android:gravity="center"
         android:text="@string/答题模式1"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btn_mode_choose_chanllenge"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/iv_mode_choose_top_background"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btn_mode_choose_chanllenge"
         android:layout_width="150dp"
         android:layout_height="80dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="65dp"
         android:background="@drawable/btn_challeng_2"
         android:gravity="center"
         android:text="@string/答题模式2"
         android:textColor="#FFFB07"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_mode_choose_adventure"/>
 
     <ImageView
         android:id="@+id/iv_mode_choose_top_background"
-        android:layout_width="413dp"
+        android:layout_width="match_parent"
         android:layout_height="246dp"
-        android:contentDescription=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,43 +69,38 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="390dp"
         android:layout_height="14dp"
+        android:layout_marginBottom="78dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.836" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <ImageButton
         android:id="@+id/img_btn_mode_choose_to_home"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:contentDescription="@string/HOME"
+        android:layout_marginStart="88dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar"
-        app:layout_constraintVertical_bias="0.15"
         app:srcCompat="@drawable/btn_home" />
 
     <ImageButton
         android:id="@+id/img_btn_mode_choose_to_personal_center"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:contentDescription="@string/USER"
         android:drawableBottom="@drawable/btn_user"
         android:text="@string/HOME"
+        android:layout_marginEnd="88dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar"
-        app:layout_constraintVertical_bias="0.15"
         app:srcCompat="@drawable/btn_user" />
 
-    <TextView
+ <!--   <TextView
         android:id="@+id/tv_mode_choose_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -134,7 +125,7 @@
         app:layout_constraintHorizontal_bias="0.699"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_btn_mode_choose_to_personal_center"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

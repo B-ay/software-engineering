@@ -1,0 +1,13 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="#50f5fffa" /> <!-- 设置矩形的背景颜色为透明 -->
+            <corners android:radius="10dp" /> <!-- 圆角半径，这里是10dp -->
+        </shape>
+    </item>
+    <item>
+        <bitmap
+            android:src="@drawable/chanllenge_wooden"
+            android:gravity="center" />
+    </item>
+</layer-list>

@@ -26,9 +26,9 @@
          width:描边宽度
          color:描边颜色
      -->
-<!--    <stroke-->
-<!--        android:width="10px"-->
-<!--        android:color="#f0ffff" />-->
+    <stroke
+       android:width="5px"
+       android:color="#f0ffff" />
 
     <!-- 设置填充效果
          color:填充颜色
