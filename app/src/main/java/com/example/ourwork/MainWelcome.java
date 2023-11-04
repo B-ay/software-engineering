@@ -57,8 +57,8 @@ public class MainWelcome extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_main_welcome_start) {
-            SharedPreferences use_info = getSharedPreferences("use_info", MODE_PRIVATE);
-            String auto_login = use_info.getString("auto_login", "false"); // 获取是否自动登录
+            SharedPreferences user_info = getSharedPreferences("user_info", MODE_PRIVATE);
+            String auto_login = user_info.getString("auto_login", "false"); // 获取是否自动登录
             if (auto_login.equals("true")) {
                 // 如果选择了自动登录的模式
                 // 此时一定user_num不是0
