@@ -43,7 +43,7 @@ public class ModeChoose extends AppCompatActivity implements View.OnClickListene
         img_btn_mode_choose_to_personal_center = findViewById(R.id.img_btn_mode_choose_to_personal_center);
         // 设置监听器
         btn_mode_choose_adventure.setOnClickListener(this);
-        btn_mode_choose_adventure.setOnClickListener(this);
+        btn_mode_choose_chanllenge.setOnClickListener(this);
         img_btn_mode_choose_back.setOnClickListener(this);
         img_btn_mode_choose_to_home.setOnClickListener(this);
         img_btn_mode_choose_to_personal_center.setOnClickListener(this);
