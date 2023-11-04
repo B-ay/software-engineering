@@ -3,6 +3,8 @@ package com.example.ourwork;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Shader;
 import android.os.Bundle;
 
 // 冒险模式下英语的答题界面
@@ -23,11 +25,12 @@ import java.io.File;
 import java.io.IOException;
 import android.util.Log;
 // 线程通信
+import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class AdventureModeEnglishProblem extends AppCompatActivity implements View.OnClickListener, CustomAdapt{
+public class AdventureModeEnglishProblem extends AppCompatActivity implements View.OnClickListener, CustomAdapt {
     TextView tv_english_A, tv_english_B, tv_english_C, tv_english_D;
     TextView tv_english_problem;
     ImageButton img_btn_english_back;
@@ -86,6 +89,36 @@ public class AdventureModeEnglishProblem extends AppCompatActivity implements Vi
         img_btn_english_back.setOnClickListener(this); // 返回按钮设置监听器
     }
 
+    // 修改用户的英文答题数量
+    public void EnglishModify() {
+        SharedPreferences user_info = getSharedPreferences("user_info", MODE_PRIVATE);
+        String username = user_info.getString("now_user", "root");
+        SharedPreferences user_to_num = getSharedPreferences("user_to_num", MODE_PRIVATE);
+        int user_num = user_to_num.getInt(username, 0);
+        String filename = "user_personal" + String.valueOf(user_num);
+        SharedPreferences modify = getSharedPreferences(filename, MODE_PRIVATE);
+        int origin = modify.getInt("English", 0);
+        int nxt = origin + 1;
+        SharedPreferences.Editor edit = modify.edit();
+        edit.putInt("English", nxt);
+        edit.apply();
+    }
+
+    // 修改用户的英文答题正确数量
+    public void EnglishRightModify() {
+        SharedPreferences user_info = getSharedPreferences("user_info", MODE_PRIVATE);
+        String username = user_info.getString("now_user", "root");
+        SharedPreferences user_to_num = getSharedPreferences("user_to_num", MODE_PRIVATE);
+        int user_num = user_to_num.getInt(username, 0);
+        String filename = "user_personal" + String.valueOf(user_num);
+        SharedPreferences modify = getSharedPreferences(filename, MODE_PRIVATE);
+        int origin = modify.getInt("EnglishRight", 0);
+        int nxt = origin + 1;
+        SharedPreferences.Editor edit = modify.edit();
+        edit.putInt("EnglishRight", nxt);
+        edit.apply();
+    }
+
     public void EnglishQAGet() {
         // ProbelmNumber初始化
         long seed = System.currentTimeMillis(); // 使用当前时间的毫秒数作为种子
@@ -104,13 +137,16 @@ public class AdventureModeEnglishProblem extends AppCompatActivity implements Vi
 
         // 标识获得了题目
         isGot = true;
+
+        // 英语答题数量+1
+        EnglishModify();
     }
 
     public class RegistrationVerification implements Runnable {
         // 重写run函数
         @Override
         public void run() {
-            String url = "http://47.120.38.204:110/math"; // 远程服务器 IP地址 + 端口号 + 路由
+            String url = "http://47.120.38.204:111/English"; // 远程服务器 IP地址 + 端口号 + 路由
             try {
                 URL obj = new URL(url);
                 HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
@@ -152,7 +188,7 @@ public class AdventureModeEnglishProblem extends AppCompatActivity implements Vi
                             String subString = data.substring(l, r);
                             Log.d("state", subString);
                             if (num == 0) {
-                                Problem = "Problem: " + subString;
+                                Problem = subString;
                             }
                             else if (num == 1) {
                                 A = "A. " + subString;
@@ -190,6 +226,8 @@ public class AdventureModeEnglishProblem extends AppCompatActivity implements Vi
         else if (v.getId() == R.id.tv_english_A) {
             if (isGot) { // 只有当获得题目了之后按击这个才有效
                 if (answer.equals("A")) {
+                    // 英语答题正确数量 + 1
+                    EnglishRightModify();
                     // 若与答案相同,则跳转到"adventure_mode_correct"
                     Intent intent = new Intent(this, AdventureModeCorrect.class);
                     Bundle DataBundle = new Bundle();
@@ -209,6 +247,8 @@ public class AdventureModeEnglishProblem extends AppCompatActivity implements Vi
         else if (v.getId() == R.id.tv_english_B) {
             if (isGot) {
                 if (answer.equals("B")) {
+                    // 英语答题正确数量 + 1
+                    EnglishRightModify();
                     // 若与答案相同,则跳转到"adventure_mode_correct"
                     Intent intent = new Intent(this, AdventureModeCorrect.class);
                     Bundle DataBundle = new Bundle();
@@ -228,6 +268,8 @@ public class AdventureModeEnglishProblem extends AppCompatActivity implements Vi
         else if (v.getId() == R.id.tv_english_C) {
             if (isGot) {
                 if (answer.equals("C")) {
+                    // 英语答题正确数量 + 1
+                    EnglishRightModify();
                     // 若与答案相同,则跳转到"adventure_mode_correct"
                     Intent intent = new Intent(this, AdventureModeCorrect.class);
                     Bundle DataBundle = new Bundle();
@@ -247,6 +289,8 @@ public class AdventureModeEnglishProblem extends AppCompatActivity implements Vi
         else if (v.getId() == R.id.tv_english_D) {
             if (isGot) {
                 if (answer.equals("D")) {
+                    // 英语答题正确数量 + 1
+                    EnglishRightModify();
                     // 若与答案相同,则跳转到"adventure_mode_correct"
                     Intent intent = new Intent(this, AdventureModeCorrect.class);
                     Bundle DataBundle = new Bundle();

@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import android.view.View;
 import me.jessyan.autosize.internal.CustomAdapt;
-public class AdventureModeCorrect extends AppCompatActivity implements View.OnClickListener, CustomAdapt{
+
+public class AdventureModeCorrect extends AppCompatActivity implements View.OnClickListener, CustomAdapt {
     ImageButton img_btn_adventure_mode_correct_right;
     ImageButton img_btn_adventure_mode_correct_back;
     String MathOrEnglish; // 目前的模式是数学还是英文
+    String TheType; // 存储数学模式的add sub mul
 
     @Override
     public boolean isBaseOnWidth() {
@@ -31,8 +33,12 @@ public class AdventureModeCorrect extends AppCompatActivity implements View.OnCl
         Intent GetIntent = getIntent();
         if  (GetIntent != null) {
             Bundle DataBundle = GetIntent.getExtras();
-            if (DataBundle != null)
+            if (DataBundle != null) {
                 MathOrEnglish = DataBundle.getString("MathOrEnglish");
+                if (MathOrEnglish.equals("Math")) {
+                    TheType = DataBundle.getString("type");
+                }
+            }
         }
         // find
         img_btn_adventure_mode_correct_right = findViewById(R.id.img_btn_adventure_mode_correct_right);
@@ -52,6 +58,9 @@ public class AdventureModeCorrect extends AppCompatActivity implements View.OnCl
             if (MathOrEnglish.equals("Math")) {
                 // 处于数学模式
                 Intent intent = new Intent(this, AdventureModeMathProblem.class);
+                Bundle dataBundle = new Bundle();
+                dataBundle.putString("type", TheType);
+                intent.putExtras(dataBundle); // 装入信息
                 startActivity(intent);
                 finish(); // 注意及时销毁
             }

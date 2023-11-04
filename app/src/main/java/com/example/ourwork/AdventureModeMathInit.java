@@ -14,7 +14,7 @@ import android.widget.ImageButton;
 import android.view.View;
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class AdventureModeMathInit extends AppCompatActivity implements View.OnClickListener, CustomAdapt{
+public class AdventureModeMathInit extends AppCompatActivity implements View.OnClickListener, CustomAdapt {
     ImageButton btn_math_init_add;
     ImageButton btn_math_init_sub;
     ImageButton btn_math_init_mul;
@@ -35,6 +35,7 @@ public class AdventureModeMathInit extends AppCompatActivity implements View.OnC
         // 父类构造 & layout展示
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adventure_mode_math_init);
+
         // find
         btn_math_init_add = findViewById(R.id.img_btn_math_init_add);
         btn_math_init_sub = findViewById(R.id.img_btn_math_init_sub);

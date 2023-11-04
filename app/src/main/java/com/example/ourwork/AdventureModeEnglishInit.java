@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import me.jessyan.autosize.internal.CustomAdapt;
+
 public class AdventureModeEnglishInit extends AppCompatActivity implements View.OnClickListener,CustomAdapt {
     Button btn_english_init_next;
     ImageButton img_btn_english_init_back;
@@ -31,7 +32,7 @@ public class AdventureModeEnglishInit extends AppCompatActivity implements View.
         setContentView(R.layout.activity_adventure_mode_english_init);
         // find
         btn_english_init_next = findViewById(R.id.btn_english_init_next);
-        img_btn_english_init_back =findViewById(R.id.img_btn_english_init_back);
+        img_btn_english_init_back = findViewById(R.id.img_btn_english_init_back);
         // 设置监听器
         btn_english_init_next.setOnClickListener(this);
         img_btn_english_init_back.setOnClickListener(this);

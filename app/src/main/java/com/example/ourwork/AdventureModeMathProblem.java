@@ -2,6 +2,7 @@ package com.example.ourwork;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.content.Intent;
 
@@ -30,7 +31,7 @@ import java.util.concurrent.CountDownLatch;
 
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class AdventureModeMathProblem extends AppCompatActivity implements View.OnClickListener, CustomAdapt{
+public class AdventureModeMathProblem extends AppCompatActivity implements View.OnClickListener, CustomAdapt {
     // 按钮类
     Button btn_math_num0, btn_math_num1, btn_math_num2, btn_math_num3, btn_math_num4;
     Button btn_math_num5, btn_math_num6, btn_math_num7, btn_math_num8, btn_math_num9;
@@ -43,7 +44,7 @@ public class AdventureModeMathProblem extends AppCompatActivity implements View.
 
     // 数据类
     String problem, answer; // 存题目和答案
-    StringBuffer user_ans;
+    StringBuffer user_ans; // 用来存放用户的答案
     boolean isGot; // 是否已经获得了题目
     String TheType; // 模式->从上一个活动传递的信息中进行解析
     String path; // 网络编程获取远程的路径
@@ -65,6 +66,7 @@ public class AdventureModeMathProblem extends AppCompatActivity implements View.
         // 父类构造 & layout展示
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adventure_mode_math_problem);
+
         // 设置初始值
         problem = "";
         answer = "";
@@ -89,6 +91,8 @@ public class AdventureModeMathProblem extends AppCompatActivity implements View.
 
         /*网络编程 设置题目 to do*/
         MathQAGet();
+        // 显示题目
+        tv_math_problem.setText(problem);
 
         // find button
         img_btn_math_back = findViewById(R.id.img_btn_math_back);
@@ -124,9 +128,41 @@ public class AdventureModeMathProblem extends AppCompatActivity implements View.
         img_btn_math_clear.setOnClickListener(this);
     }
 
+    // 修改用户的数学答题数量
+    public void MathModify() {
+        SharedPreferences user_info = getSharedPreferences("user_info", MODE_PRIVATE);
+        String username = user_info.getString("now_user", "root");
+        SharedPreferences user_to_num = getSharedPreferences("user_to_num", MODE_PRIVATE);
+        int user_num = user_to_num.getInt(username, 0);
+        String filename = "user_personal" + String.valueOf(user_num);
+        SharedPreferences modify = getSharedPreferences(filename, MODE_PRIVATE);
+        int origin = modify.getInt("Math", 0);
+        int nxt = origin + 1;
+        SharedPreferences.Editor edit = modify.edit();
+        edit.putInt("Math", nxt);
+        edit.apply();
+    }
+
+    // 修改用户的熟悉而答题正确数量
+    public void MathRightModify() {
+        SharedPreferences user_info = getSharedPreferences("user_info", MODE_PRIVATE);
+        String username = user_info.getString("now_user", "root");
+        SharedPreferences user_to_num = getSharedPreferences("user_to_num", MODE_PRIVATE);
+        int user_num = user_to_num.getInt(username, 0);
+        String filename = "user_personal" + String.valueOf(user_num);
+        SharedPreferences modify = getSharedPreferences(filename, MODE_PRIVATE);
+        int origin = modify.getInt("MathRight", 0);
+        int nxt = origin + 1;
+        SharedPreferences.Editor edit = modify.edit();
+        edit.putInt("MathRight", nxt);
+        edit.apply();
+    }
+
     public void MathQAGet() {
         // 初始化读取文件路径 & 题号
         PathAndNumberInit();
+
+        Log.d("path", path);
         // 涉及网络编程 注册的问题了
         latch = new CountDownLatch(1); // 每次都重新new
         Thread RegistrationVerificationThread = new Thread(new AdventureModeMathProblem.RegistrationVerification()); // 创建线程
@@ -138,6 +174,9 @@ public class AdventureModeMathProblem extends AppCompatActivity implements View.
         }
         // 标识获得了题目
         isGot = true;
+
+        // 数学答题数量加一
+        MathModify();
     }
 
     public void PathAndNumberInit() {
@@ -152,7 +191,7 @@ public class AdventureModeMathProblem extends AppCompatActivity implements View.
             else if (Mode == 2) {
                 path = "add_under_100";
             }
-            else if (Mode == 3) {
+            else {
                 path = "add_under_0";
             }
         }
@@ -167,7 +206,7 @@ public class AdventureModeMathProblem extends AppCompatActivity implements View.
             else if (Mode == 2) {
                 path = "sub_under_100";
             }
-            else if (Mode == 3) {
+            else {
                 path = "sub_under_0";
             }
         }
@@ -183,7 +222,7 @@ public class AdventureModeMathProblem extends AppCompatActivity implements View.
                 path = "mul_hard";
                 ProblemNum= random.nextInt(30 - 1 + 1) + 1; // 生成1-30的随机数
             }
-            else if (Mode == 3) {
+            else {
                 path = "nine_to_nine";
                 ProblemNum = random.nextInt(81 - 1 + 1) + 1; // 生成1-81的随机数
             }
@@ -323,10 +362,13 @@ public class AdventureModeMathProblem extends AppCompatActivity implements View.
                     // 提交 检查答案
                     String use_ans_string = user_ans.toString(); // 转成String
                     if (use_ans_string.equals(answer)) {
+                        // 数学答对数量+1
+                        MathRightModify();
                         // 若与答案相同,则跳转到"adventure_mode_correct"
                         Intent intent = new Intent(this, AdventureModeCorrect.class);
                         Bundle DataBundle = new Bundle();
                         DataBundle.putString("MathOrEnglish", "Math"); // 携带"Math"信息
+                        DataBundle.putString("type", TheType);
                         intent.putExtras(DataBundle);
                         startActivity(intent);
                         finish(); // 销毁本活动
