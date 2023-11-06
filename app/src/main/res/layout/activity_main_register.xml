@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainRegister">
 
-
     <EditText
         android:id="@+id/et_register_password"
         android:layout_width="216dp"
@@ -81,8 +80,11 @@
         android:id="@+id/btn_register_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="注册！"
-        android:textSize="18sp"
+        android:background="@drawable/btn_main"
+        android:text=" 注册！"
+        android:textColor="#028798"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

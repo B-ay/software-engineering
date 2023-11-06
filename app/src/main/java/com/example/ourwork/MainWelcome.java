@@ -18,7 +18,7 @@ import me.jessyan.autosize.internal.CustomAdapt;
 public class MainWelcome extends AppCompatActivity implements View.OnClickListener, CustomAdapt {
     Button btn_main_weclome_start;
     TextView tv_main_weclome_to_help;
-
+    TextView tv_main_weclome_prompt;
     @Override
     public boolean isBaseOnWidth() {
         return true;
@@ -52,8 +52,26 @@ public class MainWelcome extends AppCompatActivity implements View.OnClickListen
         tv_main_weclome_to_help = findViewById(R.id.tv_main_welcome_to_help);
         btn_main_weclome_start.setOnClickListener(this);
         tv_main_weclome_to_help.setOnClickListener(this);
+
+        // find
+        tv_main_weclome_prompt = findViewById(R.id.tv_main_weclome_prompt);
+        SetText();
     }
 
+    public void SetText() {
+        SharedPreferences user_info = getSharedPreferences("user_info", MODE_PRIVATE);
+        String now_user = user_info.getString("now_user", ""); // 换成用户名
+        if (!now_user.equals("")) {
+            // 存在目前用户
+            String s = "欢迎来到\n" + now_user +  "的学习冒险！";
+            tv_main_weclome_prompt.setText(s);
+        }
+        else {
+            // 不存在目前用户
+            String s = "欢迎来到\n乐趣答题的学习冒险！";
+            tv_main_weclome_prompt.setText(s);
+        }
+    }
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_main_welcome_start) {
@@ -86,6 +104,15 @@ public class MainWelcome extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        SetText();
         // do nothing 用于退出登录的返回响应
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SetText();
+        // do nothing
+    }
+
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OurWork</string>
+    <string name="app_name">乐趣答题</string>
     <!--start of lkx-->
     <string name="答题模式1">冒险模式</string>
     <string name="答题模式2">挑战模式</string>
