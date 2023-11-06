@@ -10,7 +10,7 @@
         android:id="@+id/tv_mainhelp_mainhelp_tv1"
         android:layout_width="337dp"
         android:layout_height="109dp"
-        android:text="关于此软件的介绍 \n此由“三个人买奶茶一个人写代码”团队\n倾心力作。\n 旨在为幼龄儿童提供简单的答题挑战。\nbalabalabala。。。"
+        android:text="关于此软件的介绍 \n此由“三个人买奶茶一个人写代码”团队\n倾心力作。\n 旨在为幼龄儿童提供简单的答题挑战。"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
