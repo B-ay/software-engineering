@@ -1,44 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainHelp">
-    
-    <TextView
-        android:id="@+id/tv_mainhelp_mainhelp_tv1"
-        android:layout_width="337dp"
-        android:layout_height="109dp"
-        android:text="关于此软件的介绍 \n此由“三个人买奶茶一个人写代码”团队\n倾心力作。\n 旨在为幼龄儿童提供简单的答题挑战。"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.446" />
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/iv_mainhelp_mainhelp_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="209dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/top_background_1" />
+    <RelativeLayout
+        android:id="@+id/ll_bg"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:background="@drawable/top_background_1"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/iv_mainhelp_back"
+            android:layout_centerVertical="true"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="22dp"
+            android:background="@drawable/go_back" />
+    </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/iv_mainhelp_back"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="180dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.031"
-        app:srcCompat="@drawable/go_back" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/ll_explain_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="0dp">
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/tv_mainhelp_mainhelp_tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关于此软件的介绍"
+            android:textStyle="bold"
+            android:textSize="25sp"
+         />
+        <TextView
+            android:id="@+id/tv_mainhelp_mainhelp_tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="
+    此由“三个人买奶茶一个人写代码”团队倾心力作。\n
+    旨在为幼龄儿童提供简单的答题挑战。"
+            android:textSize="20sp"
+         />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_explain_ad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp">
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/tv_mainhelp_mainhelp_ad1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="冒险模式"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            />
+        <TextView
+            android:id="@+id/tv_mainhelp_mainhelp_ad2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="
+    冒险模式包含数学的加减乘运算题和英语的词义选择题。\n
+    在答题过程中，程序会记录你的答题数目以及正确数目，并将其收录在个人中心。\n
+    用户可以定期查看自己的答题情况"
+            android:textSize="20sp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_explain_ch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp">
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/tv_mainhelp_mainhelp_ch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="挑战模式"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            />
+        <TextView
+            android:id="@+id/tv_mainhelp_mainhelp_ch2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="
+    玩家需要轮流投掷骰子并前进相应点数，到达每一处地方后回答问题或者抽取卡片。\n
+    问题全部回答正确则会获得奖励，率先达到终点的玩家取得最终胜利。快邀请你的小伙伴一起来玩吧！"
+            android:textSize="20sp"
+            />
+
+
+    </LinearLayout>
+</LinearLayout>

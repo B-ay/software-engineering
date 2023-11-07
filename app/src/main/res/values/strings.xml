@@ -29,5 +29,11 @@
     <string name="出题内容"> 出题内容 </string>
     <string name="英语出题内容"> 英语出题内容 </string>
     <string name="input_indicator">Your Answer:</string>
+    <string name="mode_explain">
+        <b>关于此软件的介绍</b>\n
+        此由“三个人买奶茶一个人写代码”团队倾心力作。\n
+        旨在为幼龄儿童提供简单的答题挑战。
+    </string>
+
     <!--end of lkx-->
 </resources>
