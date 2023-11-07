@@ -9,6 +9,7 @@ import android.view.View;
 import android.content.Intent;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -103,6 +104,12 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
     ImageView iv_map_dice; // 旋转骰子
     ViewFlipper mFilper;
 
+    TextView layer1name;
+    TextView layer2name;
+    TextView layer3name;
+    TextView layer4name;
+    TextView layer5name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 父类构造 & layout展示
@@ -190,8 +197,33 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
 
         // 轮播控件
         mFilper = findViewById(R.id.flipper);
-    }
 
+        // 用于根据用户人数显示用户textview
+        layer1name = findViewById(R.id.layer1name);
+        layer2name = findViewById(R.id.layer2name);
+        layer3name = findViewById(R.id.layer3name);
+        layer4name = findViewById(R.id.layer4name);
+        layer5name = findViewById(R.id.layer5name);
+
+        // 屏蔽多余的用户textview
+        hideusers();
+    }
+    public void hideusers() {
+        for (int i = 1; i <= 5; i++) {
+            if (i > person_num) {
+                if (i == 3) {
+                    layer3name.setVisibility(View.INVISIBLE);
+                }
+                else if (i ==4 ) {
+                    layer4name.setVisibility(View.INVISIBLE);
+                }
+                else if (i == 5) {
+                    layer5name.setVisibility(View.INVISIBLE);
+                }
+            }
+
+        }
+    }
     // 地图表项的初始化
     public void GridInit() {
         grid.put(0, -2);
