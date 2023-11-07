@@ -7,9 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/chanllenge_ans_background">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ChanllengeModeCorrect">
@@ -21,7 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/chanllenge_correct" />
+            app:srcCompat="@drawable/right" />
 
         <Button
             android:id="@+id/btn_continue_correct"
@@ -38,15 +36,15 @@
 
         <TextView
             android:id="@+id/tv_continue1"
-            android:layout_width="160dp"
+            android:layout_width="180dp"
             android:layout_height="54dp"
-            android:layout_marginTop="76dp"
-            android:layout_marginEnd="340dp"
+            android:layout_marginStart="288dp"
+            android:layout_marginTop="304dp"
             android:text="点击任意位置继续"
-            android:textColor="#F9053A"
+            android:textColor="#ffffff"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_ans_bg" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
