@@ -349,11 +349,13 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                     // 赋值
                     step = rollResult;
                 }
+
                 // 得出骰子数后 开始移动
                 players[person_now].pos += step;
                 players[person_now].SetForward(step); // 设置前进格数
                 // 展示位置
                 ShowAllPlayer();
+
                 // 判断是否结束
                 if (isFinish(person_now)) {
                     // 完成了将不会再答题or抽卡,直接结束
@@ -377,38 +379,42 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                         Toast toast_over = Toast.makeText(getApplicationContext(), "游戏结束", Toast.LENGTH_SHORT);
                         toast_over.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
                         toast_over.show();
-                        try {
-                            // 在主线程中等待 3 秒
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        Intent in = new Intent(this, ChanllengeModeGameResult.class); // 转到游戏结算界面
-                        Bundle dat = new Bundle();
-                        dat.putInt("number", person_num); // 人数信息
-                        for (int i = 1; i <= person_num - 1; i++) {
-                            for (int j = 0; j < person_num; j++) {
-                                if (players[j].rank == i) {
-                                    dat.putInt(String.valueOf(i), j + 1); // 获得第i名的编号j
-                                    break;
+
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent in = new Intent(ChanllegeModeMap.this, ChanllengeModeGameResult.class); // 转到游戏结算界面
+                                Bundle dat = new Bundle();
+                                dat.putInt("number", person_num); // 人数信息
+                                for (int i = 1; i <= person_num - 1; i++) {
+                                    for (int j = 0; j < person_num; j++) {
+                                        if (players[j].rank == i) {
+                                            dat.putInt(String.valueOf(i), j + 1); // 获得第i名的编号j
+                                            break;
+                                        }
+                                    }
                                 }
+                                for (int i = 0; i < person_num; i++) {
+                                    if (players[i].rank == 0) { // rank为0 说明没有完成游戏
+                                        dat.putInt(String.valueOf(person_num), i + 1); // 注意此处需要+1
+                                        break;
+                                    }
+                                }
+                                in.putExtras(dat);
+                                startActivity(in);
+                                finish(); // 结束本活动
                             }
-                        }
-                        for (int i = 0; i < person_num; i++) {
-                            if (players[i].rank == 0) { // rank为0 说明没有完成游戏
-                                dat.putInt(String.valueOf(person_num), i + 1); // 注意此处需要+1
-                                break;
-                            }
-                        }
-                        in.putExtras(dat);
-                        startActivity(in);
-                        finish(); // 结束本活动
+                        }, 3000); // 1000毫秒等于1秒
+
                     }
                 }
                 else { // 没有结束
+
                     // 显示所有人位置
                     ShowAllPlayer();
                     // 注意下负数
+
                     int pos = players[person_now].pos;
                     while (pos < 0) {
                         pos += 40;
@@ -422,6 +428,7 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                             Toast toast = Toast.makeText(getApplicationContext(), "您已回到起点", Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
                             toast.show();
+
                             // 清除所有属性
                             players[person_now].ResetAll();
                             // 计算下一个人
@@ -439,21 +446,24 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                             // 得出下一个人
                             person_now = GetNextPerson(); // 通过本函数获得下一个人
                         }
+
                         else if (gridType == 0) {
                             Toast toast = Toast.makeText(getApplicationContext(), "进入抽卡界面", Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
                             toast.show();
                             // 展示下位置
                             ShowAllPlayer();
-                            try {
-                                // 在主线程中等待 3 秒
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            // 抽卡界面
-                            Intent intent = new Intent(this, ChanllengeModeLottery.class);
-                            startActivity(intent);
+
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // 抽卡界面
+                                    Intent intent = new Intent(ChanllegeModeMap.this, ChanllengeModeLottery.class);
+                                    startActivity(intent);
+                                }
+                            }, 3000); // 1000毫秒等于1秒
+
                         }
                         else {
                             if (players[person_now].skip) {
@@ -473,31 +483,35 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                                 toast.show();
                                 // 也展示下位置
                                 ShowAllPlayer();
-                                try {
-                                    // 在主线程中等待 3 秒
-                                    Thread.sleep(2000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                // 答题界面
-                                Intent intent = new Intent(this, ChanllengeModeQuestion.class);
-                                Bundle dataBundle = new Bundle();
-                                dataBundle.putInt("number", gridType); // 题目数量
-                                long seed = System.currentTimeMillis(); // 使用当前时间的毫秒数作为种子
-                                Random random = new Random(seed);
-                                Arrays.fill(ProblemUsed, false); // 保证本5次的题目不重复即可
-                                for (int i = 1; i <= gridType; i++) {
-                                    while (true) {
-                                        int x = random.nextInt(400 - 1 + 1) + 1; // 生成1-400的随机数
-                                        if (!ProblemUsed[x]) {
-                                            ProblemUsed[x] = true; // 表示使用了这个题目
-                                            dataBundle.putInt(String.valueOf(i), x);
-                                            break;
+
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // 在这里执行启动下一个活动的代码
+                                        // 答题界面
+                                        Intent intent = new Intent(ChanllegeModeMap.this, ChanllengeModeQuestion.class);
+                                        Bundle dataBundle = new Bundle();
+                                        dataBundle.putInt("number", gridType); // 题目数量
+                                        long seed = System.currentTimeMillis(); // 使用当前时间的毫秒数作为种子
+                                        Random random = new Random(seed);
+                                        Arrays.fill(ProblemUsed, false); // 保证本5次的题目不重复即可
+                                        for (int i = 1; i <= gridType; i++) {
+                                            while (true) {
+                                                int x = random.nextInt(400 - 1 + 1) + 1; // 生成1-400的随机数
+                                                if (!ProblemUsed[x]) {
+                                                    ProblemUsed[x] = true; // 表示使用了这个题目
+                                                    dataBundle.putInt(String.valueOf(i), x);
+                                                    break;
+                                                }
+                                            }
                                         }
+
+                                        intent.putExtras(dataBundle);
+                                        startActivity(intent);
                                     }
-                                }
-                                intent.putExtras(dataBundle);
-                                startActivity(intent);
+                                }, 3000); // 1000毫秒等于1秒
+
                             }
                         }
                     }
@@ -506,6 +520,7 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                         // 日志写异常
                         Log.d("position", "exception");
                     }
+
                 }
             }
         }
@@ -536,26 +551,32 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
 
         // 判定游戏是否结束
         if (complete_num == person_num - 1) {
-            Intent in = new Intent(this, ChanllengeModeGameResult.class);
-            Bundle dat = new Bundle();
-            dat.putInt("number", person_num); // 人数信息
-            for (int i = 1; i <= person_num - 1; i++) {
-                for (int j = 0; j < person_num; j++) {
-                    if (players[j].rank == i) {
-                        dat.putInt(String.valueOf(i), j + 1);
-                        break;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent in = new Intent(ChanllegeModeMap.this, ChanllengeModeGameResult.class);
+                    Bundle dat = new Bundle();
+                    dat.putInt("number", person_num); // 人数信息
+                    for (int i = 1; i <= person_num - 1; i++) {
+                        for (int j = 0; j < person_num; j++) {
+                            if (players[j].rank == i) {
+                                dat.putInt(String.valueOf(i), j + 1);
+                                break;
+                            }
+                        }
                     }
+                    for (int i = 0; i < person_num; i++) {
+                        if (players[i].rank == 0) {
+                            dat.putInt(String.valueOf(person_num), i + 1); // 注意需要+1
+                            break;
+                        }
+                    }
+                    in.putExtras(dat);
+                    startActivity(in);
+                    finish(); // 结束本活动
                 }
-            }
-            for (int i = 0; i < person_num; i++) {
-                if (players[i].rank == 0) {
-                    dat.putInt(String.valueOf(person_num), i + 1); // 注意需要+1
-                    break;
-                }
-            }
-            in.putExtras(dat);
-            startActivity(in);
-            finish(); // 结束本活动
+            }, 3000); // 1000毫秒等于1秒
         }
     }
 
@@ -571,12 +592,7 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                 Toast toast_go = Toast.makeText(getApplicationContext(), "前进" + String.valueOf(step) +  "步", Toast.LENGTH_SHORT);
                 toast_go.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
                 toast_go.show();
-                try {
-                    // 在主线程中等待 3 秒
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
                 // 清除所有效果
                 players[person_now].ResetAll();
                 // 如果结束了
@@ -592,13 +608,27 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                     players[person_now].rank = complete_num + 1;
                     complete_num++;
                     // 消失ta的发光轮廓
-                    ShowAllPlayer();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 在这里执行启动下一个活动的代码
+                            ShowAllPlayer();
+                        }
+                    }, 2000); // 1000毫秒等于1秒
+
                 }
                 else {
-                    // 显示更新的发光轮廓
-                    ShowAllPlayer();
-                    // 清除所有属性
-                    players[person_now].ResetAll();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 显示更新的发光轮廓
+                            ShowAllPlayer();
+                            // 清除所有属性
+                            players[person_now].ResetAll();
+                        }
+                    }, 2000); // 1000毫秒等于1秒
                 }
             }
             else if (words[1].equals("backward")) {
@@ -608,16 +638,17 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                 Toast toast_go = Toast.makeText(getApplicationContext(), "后退" + String.valueOf(step) +  "步", Toast.LENGTH_SHORT);
                 toast_go.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
                 toast_go.show();
-                try {
-                    // 在主线程中等待 3 秒
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                // 显示自己
-                ShowAllPlayer();
-                // 清除所有效果
-                players[person_now].ResetAll();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 显示自己
+                        ShowAllPlayer();
+                        // 清除所有效果
+                        players[person_now].ResetAll();
+                    }
+                }, 2000); // 1000毫秒等于1秒
+
             }
             else if (words[1].equals("forbidden")) {
                 // 清除所有效果
@@ -663,7 +694,7 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                 toast_go.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
                 toast_go.show();
                 try {
-                    // 在主线程中等待 3 秒
+                    // 在主线程中等待 1 秒
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -679,12 +710,24 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                     players[person_next].completed = true;
                     players[person_next].rank = complete_num + 1;
                     complete_num++;
-                    // 消失ta的发光轮廓
-                    ShowAllPlayer();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 显示更新的发光轮廓
+                            ShowAllPlayer();
+                        }
+                    }, 2000); // 1000毫秒等于1秒
                 }
                 else {
-                    // 显示更新的发光轮廓
-                    ShowAllPlayer();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 显示更新的发光轮廓
+                            ShowAllPlayer();
+                        }
+                    }, 2000); // 1000毫秒等于1秒
                 }
             }
             else if (words[1].equals("backward")) {
@@ -694,14 +737,14 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                 Toast toast_go = Toast.makeText(getApplicationContext(), "后退" + String.valueOf(step) + "步", Toast.LENGTH_SHORT);
                 toast_go.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
                 toast_go.show();
-                try {
-                    // 在主线程中等待 3 秒
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                // 显示
-                ShowAllPlayer();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 显示更新的发光轮廓
+                        ShowAllPlayer();
+                    }
+                }, 2000); // 1000毫秒等于1秒
             }
             else if (words[1].equals("forbidden")) {
                 players[person_next].forbidden = true;
@@ -726,18 +769,18 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                 Toast toast_go = Toast.makeText(getApplicationContext(), "玩家交换位置", Toast.LENGTH_SHORT);
                 toast_go.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
                 toast_go.show();
-                try {
-                    // 在主线程中等待 3 秒
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 // 交换位置
                 int pos1 = players[person_now].pos;
                 players[person_now].pos = players[person_next].pos;
                 players[person_next].pos = pos1;
-                // 显示玩家位置
-                ShowAllPlayer();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 显示更新的发光轮廓
+                        ShowAllPlayer();
+                    }
+                }, 2000); // 1000毫秒等于1秒
             }
             else if (words[1].equals("isYourForward")) {
                 int person_next = GetNextPerson();
@@ -772,7 +815,7 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                 toast_go.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0);
                 toast_go.show();
                 try {
-                    // 在主线程中等待 3 秒
+                    // 在主线程中等待 1 秒
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -789,14 +832,28 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
                     players[person_now].completed = true;
                     players[person_now].rank = complete_num + 1;
                     complete_num++;
-                    // 消失ta的发光轮廓
-                    ShowAllPlayer();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 显示更新的发光轮廓
+                            ShowAllPlayer();
+                        }
+                    }, 2000); // 1000毫秒等于1秒
                 }
                 else {
-                    // 显示更新的发光轮廓
-                    ShowAllPlayer();
-                    // 清除所有属性
-                    players[person_now].ResetAll();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 显示更新的发光轮廓
+                            ShowAllPlayer();
+                            // 清除所有属性
+                            players[person_now].ResetAll();
+                        }
+                    }, 2000); // 1000毫秒等于1秒
+
+
                 }
             }
         }
@@ -881,6 +938,7 @@ public class ChanllegeModeMap extends AppCompatActivity implements View.OnClickL
 
         // 创建一个 LayoutParams 对象来设置宽度和高度
         ViewGroup.LayoutParams params = iv_grid[pos].getLayoutParams();
+
     }
 
     public Bitmap drawableToBitamp(Drawable drawable)
