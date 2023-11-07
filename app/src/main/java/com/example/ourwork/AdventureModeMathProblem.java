@@ -220,7 +220,7 @@ public class AdventureModeMathProblem extends AppCompatActivity implements View.
             }
             else if (Mode == 2) {
                 path = "mul_hard";
-                ProblemNum= random.nextInt(30 - 1 + 1) + 1; // 生成1-30的随机数
+                ProblemNum= random.nextInt(15 - 1 + 1) + 1; // 生成1-15的随机数
             }
             else {
                 path = "nine_to_nine";
