@@ -202,7 +202,21 @@ public class MainModify extends AppCompatActivity implements View.OnClickListene
             Uri selectedImageUri = intent.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
-                img.setImageBitmap(bitmap);
+
+                // img.invalidate(); // 强制刷新 ImageView
+//                // 设置宽度和高度（以dp为单位，需要进行单位转换）
+//                int dpValue = 64; // 设置宽度和高度的dp值
+//                float density = getResources().getDisplayMetrics().density; // 获取屏幕密度
+//                int pixelValue = (int) (dpValue * density + 0.5f); // 将dp转换为像素
+//                img.getLayoutParams().width = pixelValue; // 设置宽度
+//                img.getLayoutParams().height = pixelValue; // 设置高度
+//                img.requestLayout(); // 通知布局系统更新视图大小
+                // 计算图片的最小边
+                int minSize = Math.min(bitmap.getWidth(), bitmap.getHeight());
+
+                // 将图片裁剪为正方形
+                Bitmap squareBitmap = Bitmap.createBitmap(bitmap, 0, 0, minSize, minSize);
+                img.setImageBitmap(squareBitmap);
                 // 同时还需要将这个bitmap存到私有存储空间中
                 File rootDirectory = new File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), String.valueOf(num));
                 if (!rootDirectory.exists()) {

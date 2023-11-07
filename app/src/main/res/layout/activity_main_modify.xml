@@ -55,6 +55,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
             android:background="@drawable/cat"
+            android:src="@drawable/circle_image"
             />
 <!--        android:src="@drawable/circle_image"-->
         <TextView
