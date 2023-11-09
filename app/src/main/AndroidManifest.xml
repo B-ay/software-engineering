@@ -31,7 +31,9 @@
             android:exported="true" />
         <activity
             android:name=".ChanllengeModePersonNumber"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="landscape"
+            />
         <activity
             android:name=".MainHelp"
             android:exported="true" />
@@ -73,26 +75,33 @@
             android:exported="true" />
         <activity
             android:name=".ChanllengeModeWrong"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".ChanllengeModeCorrect"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".ChanllengeModeLotteryResult"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".ChanllengeModeLottery"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".ChanllengeModeGameResult"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".ChanllengeModeQuestion"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".ChanllegeModeMap"
             android:exported="true"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

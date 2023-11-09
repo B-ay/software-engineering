@@ -96,7 +96,31 @@
     问题全部回答正确则会获得奖励，率先达到终点的玩家取得最终胜利。快邀请你的小伙伴一起来玩吧！"
             android:textSize="20sp"
             />
-
+    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_explain_rel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp">
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/tv_mainhelp_mainhelp_rel1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我们的联系方式"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                />
+            <TextView
+                android:id="@+id/tv_mainhelp_mainhelp_rel2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="
+    邮箱:1474867893@qq.com\n
+    手机:13879167628"
+                android:textSize="20sp"
+                />
 
     </LinearLayout>
 </LinearLayout>
