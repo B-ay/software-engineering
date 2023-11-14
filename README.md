@@ -3,9 +3,8 @@
 #### 介绍
 队伍成员：林光明，孟想文昕，刘凯欣，周备
 
-<!--
 #### 软件架构
-软件架构说明
+软件名称为乐趣答题，是基于Android平台开发的一款APK文件格式的APP。主要内容为
 
 
 #### 安装教程
@@ -36,4 +35,4 @@
 4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
 5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
 6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
--->
+
